@@ -82,7 +82,7 @@ def makerawdata(code, refer_day, timestamp):
             fig.savefig("./img/%s/%s/%s_%s_%s.png" % (dir_title,category, code, title, result))
         start_num += 1
         plt.close(fig)
-        time.sleep(0.5)
+        
 
 
 
