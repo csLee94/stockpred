@@ -1,26 +1,21 @@
 import pandas as pd
 import pandas_datareader as pdr
-from matplotlib import pyplot as plt 
-import datetime
-code_df = pd.read_csv('./kospi200_list.csv')
 
-start = datetime.datetime(2021,1,1)
-df = pdr.get_data_yahoo("352820.KS", start)
+code_data = pd.read_csv("./kospi.csv", encoding='cp949')
+target_dict={}
+target_df = pd.DataFrame()
+count = 0
+for code in list(code_data['code']):
+    s_code = code[3:-3]
+    try:
+        tdf = pdr.get_data_yahoo(s_code+".KS")
+        target_dict['code'] = code
+        target_dict['name'] = str(code_data.loc[code_data['code']==code]['name'].values).split("'")[1]
+        target_df = target_df.append(target_dict, ignore_index=True)
+        count +=1
+        print(count)
+    except:
+        print("pass")
 
-# print(df.iloc[30])
-# print("#"*30)
-start_num = 0
-refer_day = 30
-timestamp = 15
-
-# for idx in range(refer_day,len(df)):
-#     print(df.iloc[idx])
-tlst = []
-while True:
-    if len(df) < start_num + refer_day + timestamp:
-        break
-    tlst.append('a')
-    start_num +=1
-
-print(len(df))
-print(len(tlst))
+# target_df = pd.DataFrame(target_dict)
+target_df.to_csv("./kospi_list.csv", encoding='cp949')
