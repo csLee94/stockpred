@@ -93,12 +93,12 @@ def makerawdata(code, refer_day, timestamp):
 refer_day = 30
 timestamp = 5
 
-code_data = pd.read_csv("./kospi.csv")
+code_data = pd.read_csv("./kospi_list.csv", encoding='cp949')
 for code in list(code_data['code']):
-    s_code = code[4:-3]
+    s_code = code[3:-3]
     try:
         makerawdata(s_code, refer_day, timestamp)
-        name = str(code_data.loc[code_data['code']==code]['name'])
+        name = str(code_data.loc[code_data['code']==code]['name'].values).split("'")[1]
         time_tuple = time.localtime()
         time_str = time.strftime("%m/%d/%Y, %H:%M:%S", time_tuple).split(", ")[0]
         memo = open('memo.txt', 'a', encoding='utf8')
