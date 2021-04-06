@@ -8,6 +8,7 @@ import time
 
 # parameter
 '''
+directory path setting
 1. code
 2. refer_day
 3. timestamp
@@ -18,14 +19,14 @@ def makerawdata(code, refer_day, timestamp):
     df = pdr.get_data_yahoo(str(code)+".KS", start)
     # 기초 변수 설정
     col_list = ['High', 'Low', 'Open', 'Close', 'Adj Close']
-    col_dict = {'High': 'olive', 'Low':'forestgreen', 'Open':'darkmagenta', 'Close':'darkviolet', 'Adj Close':'crimson'}
+    col_dict = {'High': 'olive', 'Low':'forestgreen', 'Open':'darkmagenta', 'Close':'darkviolet', 'Adj Close':'gray'}
     start_num = 0
     # 중복 검사를 위한 리스트 생성
     category_list = ["0", "1","2","3","4","5","6","7","8","9","10","11"]
     file_list =[]
     for dir_num in category_list:
         dir_title = str(refer_day)+str(timestamp)
-        path_dir = "./img/%s/%s"
+        path_dir = "D:/templcs/stockpred/img/%s/%s"
         file_list += os.listdir(path_dir % (dir_title, dir_num))
     # 그래프 생성 While 문
     while True:
@@ -83,7 +84,7 @@ def makerawdata(code, refer_day, timestamp):
         if "%s_%s_%s" % (code, title, result) in file_list:
             pass
         else:
-            fig.savefig("./img/%s/%s/%s_%s_%s.png" % (dir_title,category, code, title, result))
+            fig.savefig("D:/templcs/stockpred/img/%s/%s/%s_%s_%s.png" % (dir_title,category, code, title, result))
         start_num += 1
         plt.close(fig)
         
@@ -93,9 +94,9 @@ def makerawdata(code, refer_day, timestamp):
 refer_day = 30
 timestamp = 5
 
-code_data = pd.read_csv("./kospi_list.csv", encoding='cp949')
+code_data = pd.read_csv("./kospi200_list.csv", encoding='cp949')
 for code in list(code_data['code']):
-    s_code = code[3:-3]
+    s_code = code.split('A')[-1]
     try:
         makerawdata(s_code, refer_day, timestamp)
         name = str(code_data.loc[code_data['code']==code]['name'].values).split("'")[1]
