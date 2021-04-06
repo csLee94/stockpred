@@ -28,11 +28,11 @@ path = "C:/Users/pc1/Documents/#0.LCS/stockpred/img/305/%s/%s"
 
 for label in category_list:
     file_list = file_dict[label]
-    for infor in file_list:
+    for infor in file_list[:5000]:
         img = cv2.imread(path % (label, infor))
         x_data.append(img/255)
         y_data.append(label)
-    # time.sleep(1)
+    time.sleep(1)
 
 np_x_data = np.array(x_data)
 np_y_data = np.array(y_data)
