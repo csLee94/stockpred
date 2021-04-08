@@ -19,14 +19,14 @@ def makerawdata(code, refer_day, timestamp):
     df = pdr.get_data_yahoo(str(code)+".KS", start)
     # 기초 변수 설정
     col_list = ['High', 'Low', 'Open', 'Close', 'Adj Close']
-    col_dict = {'High': 'olive', 'Low':'forestgreen', 'Open':'darkmagenta', 'Close':'darkviolet', 'Adj Close':'gray'}
+    col_dict = {'High': '#FF009D', 'Low':'#F0009D', 'Open':'#04FFE2', 'Close':'#00CFFE', 'Adj Close':'#FFFFFF'}
     start_num = 0
     # 중복 검사를 위한 리스트 생성
     category_list = ["0", "1","2","3","4","5","6","7","8","9","10","11"]
     file_list =[]
     for dir_num in category_list:
         dir_title = str(refer_day)+str(timestamp)
-        path_dir = "D:/templcs/stockpred/img/%s/%s"
+        path_dir = "./img/%s/%s"
         file_list += os.listdir(path_dir % (dir_title, dir_num))
     # 그래프 생성 While 문
     while True:
@@ -36,6 +36,7 @@ def makerawdata(code, refer_day, timestamp):
         tdf_mean = np.array(tdf['Adj Close']).mean()
         tdf_std = np.array(tdf['Adj Close']).std()
         fig, ax1 = plt.subplots()
+        ax1.set_facecolor('#000000')
         x = 320 / fig.dpi
         y = 240 / fig.dpi
         fig.set_figwidth(x)
@@ -44,8 +45,10 @@ def makerawdata(code, refer_day, timestamp):
         ax1.axis([tdf.index[0],tdf.index[refer_day-1],(tdf_mean-tdf_std*4), (tdf_mean+tdf_std*4)])
         ax2.axis([tdf.index[0],tdf.index[refer_day-1],(np.array(tdf['Volume']).mean()- 4*np.array(tdf['Volume']).std()),(np.array(tdf['Volume']).mean()+4*np.array(tdf['Volume']).std())])
         for col in col_list:
-            ax1.plot(tdf[col], color = col_dict[col], linewidth= 3.0, alpha=0.6)
-        ax2.plot(tdf['Volume'], color = 'gold', linewidth=3.0, alpha=0.6) # High, Low, Open, Close, Adj Close, Volume 그래프 완성
+            ax1.plot(tdf[col], color = col_dict[col], linewidth= 3.0, alpha=0.8)
+            ax1.fill_between(list(tdf.index),list(tdf[col]), color = col_dict[col], alpha=0.3)
+        ax2.plot(tdf['Volume'], color = '#808080', linewidth=3.0, alpha=0.8) # High, Low, Open, Close, Adj Close, Volume 그래프 완성
+        ax2.fill_between(list(tdf.index),list(tdf['Volume']), color = '#A9A9A9', alpha=0.3)
         ax1.axes.xaxis.set_visible(False)
         ax1.axes.yaxis.set_visible(False)
         ax2.axes.yaxis.set_visible(False)
@@ -84,7 +87,7 @@ def makerawdata(code, refer_day, timestamp):
         if "%s_%s_%s" % (code, title, result) in file_list:
             pass
         else:
-            fig.savefig("D:/templcs/stockpred/img/%s/%s/%s_%s_%s.png" % (dir_title,category, code, title, result))
+            fig.savefig("./img/%s/%s/%s_%s_%s.png" % (dir_title,category, code, title, result))
         start_num += 1
         plt.close(fig)
         
