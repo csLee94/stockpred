@@ -43,7 +43,7 @@ def makerawdata(code, refer_day, timestamp):
         fig.set_figheight(y)
         ax2 =  ax1.twinx()
         ax1.axis([tdf.index[0],tdf.index[refer_day-1],(tdf_mean-tdf_std*4), (tdf_mean+tdf_std*4)])
-        ax2.axis([tdf.index[0],tdf.index[refer_day-1],(np.array(tdf['Volume']).mean()- 4*np.array(tdf['Volume']).std()),(np.array(tdf['Volume']).mean()+4*np.array(tdf['Volume']).std())])
+        ax2.axis([tdf.index[0],tdf.index[refer_day-1],0,np.array(tdf['Volume']).max()])
         for col in col_list:
             ax1.plot(tdf[col], color = col_dict[col], linewidth= 3.0, alpha=0.8)
             ax1.fill_between(list(tdf.index),list(tdf[col]), color = col_dict[col], alpha=0.3)
