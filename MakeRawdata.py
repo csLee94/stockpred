@@ -15,7 +15,7 @@ directory path setting
 '''
 def makerawdata(code, refer_day, timestamp):
     # 주가 정보 불러오기
-    start = datetime.datetime(2000,1,1)
+    start = datetime.datetime(2000,1,1) 
     df = pdr.get_data_yahoo(str(code)+".KS", start)
     # 기초 변수 설정
     col_list = ['High', 'Low', 'Open', 'Close', 'Adj Close']
