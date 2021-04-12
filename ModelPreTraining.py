@@ -53,7 +53,7 @@ model.add(Dense(24, activation='relu'))
 model.add(Dense(12, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-es = EarlyStopping(monitor='val_accuracy', mode='max', patience=100)
+es = EarlyStopping(monitor='val_accuracy', mode='max', patience=300)
 hist = model.fit(np_x_data, np_y_encoding, batch_size=50, epochs = 500, validation_split=0.2, callbacks=[es]) # epochs=500 
 model.save(save_path % "stockpred_cnn")
 
