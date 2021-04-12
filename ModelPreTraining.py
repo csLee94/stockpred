@@ -19,8 +19,8 @@ category_list = ["0", "1","2","3","4","5","6","7","8","9","10","11"]
 
 x_data = []
 y_data = []
-path_dir = "D:/templcs/stockpred/img/305/%s"
-path = "D:/templcs/stockpred/img/305/%s/%s"
+path_dir = "D:/MyDocument/Desktop/temp_lcs/stockpred/img/305/%s"
+path = "D:/MyDocument/Desktop/temp_lcs/stockpred/img/305/%s/%s"
 save_path = "./%s" # PC1
 save_path = "D:/MyDocument/Desktop/temp_lcs/stockpred/%s" # PC2
 
