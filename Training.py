@@ -128,8 +128,8 @@ while True:
         np_y_data = np.array(y_data)    
         np_y_encoding = np_utils.to_categorical(np_y_data) 
         model = tf.keras.models.load_model('stockpred_cnn')
-        es = EarlyStopping(monitor='val_accuracy', mode='max', patience=300)
-        hist = model.fit(np_x_data, np_y_encoding, batch_size=50, epochs = 500, validation_split=0.2, callbacks=[es]) # epochs=500 
+        es = EarlyStopping(monitor='val_accuracy', mode='max', patience=500)
+        hist = model.fit(np_x_data, np_y_encoding, batch_size=128, epochs = 1000, validation_split=0.1, callbacks=[es]) # epochs=500 
         model.save(save_path % "stockpred_cnn")
 
         fig, loss_ax = plt.subplots()
@@ -144,6 +144,6 @@ while True:
         loss_ax.legend(loc='upper left')
         acc_ax.legend(loc='lower left')
 
-        fig.savefig("./result_%s.png" % idx)
+        fig.savefig("./result/result_%s.png" % idx)
         plt.close()
         idx +=1 
