@@ -27,7 +27,7 @@ category_list = ["0", "1","2","3","4","5","6","7","8","9","10","11"]
 file_dict ={}
 file_list = []
 for label in category_list:
-    path_dir = "./img/305/%s"
+    path_dir = "D:/MyDocument/Desktop/temp_lcs/stockpred/img/305/%s"
     file_list += os.listdir(path_dir % label)
     random.shuffle(file_list)
 
@@ -35,11 +35,12 @@ for label in category_list:
 path = "D:/MyDocument/Desktop/temp_lcs/stockpred/img/305/%s/%s"
 save_path = "D:/MyDocument/Desktop/temp_lcs/stockpred/%s"
 idx = 0
+set_amt = 3000
 while True:
     x_data = []
     y_data = []
-    if (idx+1)*5000 > len(file_list):
-        for infor in file_list[idx*5000:]: # 범위 지정
+    if (idx+1)*set_amt > len(file_list):
+        for infor in file_list[idx*set_amt:]: # 범위 지정
             target_ratio = infor.split("_")[-1].rstrip(".png")
             target_ratio = float(target_ratio.replace("^", "."))
             if target_ratio > 10:
@@ -73,7 +74,7 @@ while True:
         np_x_data = np.array(x_data)
         np_y_data = np.array(y_data)    
         np_y_encoding = np_utils.to_categorical(np_y_data) 
-        model = tf.keras.models.load_model('vgg16')
+        model = tf.keras.models.load_model('D:/MyDocument/Desktop/temp_lcs/stockpred/vgg16')
         es = EarlyStopping(monitor='val_accuracy', mode='max', patience=50)
         hist = model.fit(np_x_data, np_y_encoding, batch_size=32, epochs = 100, validation_split=0.2, callbacks=[es]) # epochs=500 
         model.save(save_path % "vgg16")
@@ -95,7 +96,7 @@ while True:
         break
 
     else:
-        for infor in file_list[idx*5000:(idx+1)*5000]: # 범위 지정
+        for infor in file_list[idx*set_amt:(idx+1)*set_amt]: # 범위 지정
             target_ratio = infor.split("_")[-1].rstrip(".png")
             target_ratio = float(target_ratio.replace("^", "."))
             if target_ratio > 10:
@@ -130,7 +131,7 @@ while True:
         np_x_data = np.array(x_data)
         np_y_data = np.array(y_data)    
         np_y_encoding = np_utils.to_categorical(np_y_data) 
-        model = tf.keras.models.load_model('vgg16')
+        model = tf.keras.models.load_model('D:/MyDocument/Desktop/temp_lcs/stockpred/vgg16')
         es = EarlyStopping(monitor='val_accuracy', mode='max', patience=50)
         hist = model.fit(np_x_data, np_y_encoding, batch_size=32, epochs = 100, validation_split=0.1, callbacks=[es]) # epochs=500 
         model.save(save_path % "vgg16")
